@@ -80,6 +80,57 @@ describe('v1 API', function() {
             });
         });
     });
+
+    describe('GET /is_valid_question_type', function() {
+        describe('bad requests', function() {
+            describe('no question_type parameter', function() {
+                it('should respond with 400', function(done) {
+                    request(app)
+                    .get('/v1/is_valid_question_type')
+                    .expect(400)
+                    .end(done);
+                });
+            });
+        });
+        describe('when question type is invalid', function() {
+            var isValidQuestionTypeStub;
+            before(function() {
+                isValidQuestionTypeStub = sinon.stub(projectAwesome, 'isValidQuestionType', function() { return false; });
+            });
+            after(function() {
+                isValidQuestionTypeStub.restore();
+            });
+            it('should respond with json body { is_valid_question_type: false }', function(done) {
+                request(app)
+                .get('/v1/is_valid_question_type?question_type=doesntmatter')
+                .expect(200)
+                .end(function(err, res) {
+                    if (err) return done(err);
+                    expect(res.body).to.eql({ is_valid_question_type: false });
+                    done();
+                });
+            });
+        });
+        describe('when question type is valid', function() {
+            var isValidQuestionTypeStub;
+            before(function() {
+                isValidQuestionTypeStub = sinon.stub(projectAwesome, 'isValidQuestionType', function() { return true; });
+            });
+            after(function() {
+                isValidQuestionTypeStub.restore();
+            });
+            it('should respond with json body { is_valid_question_type: true }', function(done) {
+                request(app)
+                .get('/v1/is_valid_question_type?question_type=doesntmatter')
+                .expect(200)
+                .end(function(err, res) {
+                    if (err) return done(err);
+                    expect(res.body).to.eql({ is_valid_question_type: true });
+                    done();
+                });
+            });
+        });
+    });
 });
 
 
