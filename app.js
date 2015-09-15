@@ -17,7 +17,10 @@ app.use(function logHttpRequest(req, res, next) {
     next();
 });
 
-// routes ======================================================================
+// api routes ======================================================================
+require('./api')(app);
+
+
 
 // Exports application for testing
 module.exports = app;
