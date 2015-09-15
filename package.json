@@ -1,0 +1,25 @@
+{
+  "name": "pa-service",
+  "version": "0.1.0",
+  "description": "A project-awesome web service for interacting with project-awesome functionality.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+
+  },
+  "engines": {
+    "node": "0.12.2"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "keywords": [
+    "node",
+    "heroku"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+  }
+}
