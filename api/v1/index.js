@@ -2,18 +2,6 @@ var projectAwesome = require('project-awesome');
 var requestChecker = require('../../middleware/request-checker.js');
 var requireQuery = requestChecker.requireQuery;
 
-/*
-module.exports.isSeedValid = QuizValidator.isSeedValid;
-
-module.exports.isValidQuestionType = questions.isValidQuestionType;
-
-module.exports.generateMoodleXML = MoodleExporter.generateMoodleXML;
-
-
-module.exports.validateQuizDescriptor = QuizBuilder.validateQuizDescriptor;
-module.exports.buildQuiz = QuizBuilder.build;
-*/
-
 module.exports = function(app) {
 
 	app.get('/v1/is_seed_valid', requireQuery('seed'), function(req, res) {
@@ -56,6 +44,26 @@ module.exports = function(app) {
 			return;
 		}
 		res.json(projectAwesome.validateQuizDescriptor(req.body.descriptor));
+	});
+
+	app.post('/v1/build_quiz', function(req, res) {
+		if (!('descriptor' in req.body)) {
+			res.status(400).end();
+			return;
+		}
+		if (!('seed' in req.body)) {
+			res.status(400).end();
+			return;
+		}
+		if (!projectAwesome.isSeedValid(req.body.seed)) {
+			res.status(400).end();
+			return;
+		}
+		if (projectAwesome.validateQuizDescriptor(req.body.descriptor).length > 0) {
+			res.status(400).end();
+			return;
+		}
+		res.json(projectAwesome.buildQuiz(req.body.descriptor, req.body.seed));
 	});
 }
 

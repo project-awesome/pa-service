@@ -8,16 +8,6 @@ var expect = chai.expect;
 
 var requestChecker = require('../../middleware/request-checker.js');
 
-/*
-    return function(req, res, next) {
-        if (!(name in req.query)) {
-            res.status(400).end();
-            return;
-        }
-        next();
-    }
-*/
-
 
 describe('request-checker', function() {
     describe('requireQuery(name)', function() {

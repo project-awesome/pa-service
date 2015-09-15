@@ -15,9 +15,6 @@ var app = require('../../../app.js');
 var server;
 
 
-
-
-
 describe('v1 API', function() {
 
     before(function(done) {
@@ -30,6 +27,108 @@ describe('v1 API', function() {
         server.close();
     });
 
+    describe('POST /build_quiz', function() {
+        describe('bad requests', function() {
+            describe('missing parameters', function() {
+                var isSeedValidStub;
+                var validateQuizDescriptorStub;
+                before(function() {
+                    isSeedValidStub = sinon.stub(projectAwesome, 'isSeedValid', function() { return true; });
+                    validateQuizDescriptorStub = sinon.stub(projectAwesome, 'validateQuizDescriptor', function() { return []; });
+                });
+                after(function() {
+                    isSeedValidStub.restore();
+                    validateQuizDescriptorStub.restore();
+                });
+                describe('no descriptor parameter', function() {
+                    it('should respond with 400', function(done) {
+                        request(app)
+                        .post('/v1/build_quiz')
+                        .send({seed:'someseed'})
+                        .expect(400)
+                        .end(done);
+                    });
+                });
+                describe('no seed parameter', function() {
+                    it('should respond with 400', function(done) {
+                        request(app)
+                        .post('/v1/build_quiz')
+                        .send({descriptor:'somedescriptor'})
+                        .expect(400)
+                        .end(done);
+                    });
+                });
+            });
+            describe('invalid parameters', function() {
+                describe('invalid descriptor', function() {
+                    var isSeedValidStub;
+                    var validateQuizDescriptorStub;
+                    before(function() {
+                        isSeedValidStub = sinon.stub(projectAwesome, 'isSeedValid', function() { return true; });
+                        validateQuizDescriptorStub = sinon.stub(projectAwesome, 'validateQuizDescriptor', function() { return [{"some":"error"}]; });
+                    });
+                    after(function() {
+                        isSeedValidStub.restore();
+                        validateQuizDescriptorStub.restore();
+                    });
+                    it('should respond with status 400', function(done) {
+                        request(app)
+                        .post('/v1/build_quiz')
+                        .send({descriptor:'somedescriptor', seed:'someseed'})
+                        .expect(400)
+                        .end(done);
+                    });
+                });
+                describe('invalid seed', function() {
+                    var isSeedValidStub;
+                    var validateQuizDescriptorStub;
+                    before(function() {
+                        isSeedValidStub = sinon.stub(projectAwesome, 'isSeedValid', function() { return false; });
+                        validateQuizDescriptorStub = sinon.stub(projectAwesome, 'validateQuizDescriptor', function() { return []; });
+                    });
+                    after(function() {
+                        isSeedValidStub.restore();
+                        validateQuizDescriptorStub.restore();
+                    });
+                    it('should respond with status 400', function(done) {
+                        request(app)
+                        .post('/v1/build_quiz')
+                        .send({descriptor:'somedescriptor', seed:'someseed'})
+                        .expect(400)
+                        .end(done);
+                    });
+                });
+            });
+        });
+        describe('successful case', function() {
+            var isSeedValidStub;
+            var validateQuizDescriptorStub;
+            var buildQuizStub;
+            before(function() {
+                isSeedValidStub = sinon.stub(projectAwesome, 'isSeedValid', function() { return true; });
+                validateQuizDescriptorStub = sinon.stub(projectAwesome, 'validateQuizDescriptor', function() { return []; });
+                buildQuizStub = sinon.stub(projectAwesome, 'buildQuiz', function() { return {"quiz": "fake quiz"}; });
+            });
+            after(function() {
+                isSeedValidStub.restore();
+                validateQuizDescriptorStub.restore();
+                buildQuizStub.restore();
+            });
+            it('should call buildQuiz with correct parameters and return its result', function(done) {
+                request(app)
+                .post('/v1/build_quiz')
+                .send({ descriptor : "somedescriptor", seed: "someseed" })
+                .expect(200)
+                .end(function(err, res) {
+                    if (err) return done(err);
+                    expect(buildQuizStub.calledOnce).to.be.true;
+                    expect(buildQuizStub.calledWith('somedescriptor', 'someseed')).to.be.true;
+                    expect(res.body).to.eql({"quiz": "fake quiz"});
+                    done();
+                });
+            });
+        });
+    });
 
     describe('POST /validate_quiz_descriptor', function() {
         describe('bad requests', function() {
