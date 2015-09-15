@@ -49,6 +49,14 @@ module.exports = function(app) {
         	res.send(projectAwesome.generateMoodleXML(req.query.question_type, count, req.query.question_name, req.query.seed));
 		}
 	);
+
+	app.post('/v1/validate_quiz_descriptor', function(req, res) {
+		if (!('descriptor' in req.body)) {
+			res.status(400).end();
+			return;
+		}
+		res.json(projectAwesome.validateQuizDescriptor(req.body.descriptor));
+	});
 }
 
 

@@ -31,6 +31,39 @@ describe('v1 API', function() {
     });
 
 
+    describe('POST /validate_quiz_descriptor', function() {
+        describe('bad requests', function() {
+            describe('no descriptor parameter', function() {
+                it('should respond with 400', function(done) {
+                    request(app)
+                    .post('/v1/validate_quiz_descriptor')
+                    .expect(400)
+                    .end(done);
+                });
+            });
+        });
+        describe('when descriptor is set', function() {
+            var validateQuizDescriptorStub;
+            before(function() {
+                validateQuizDescriptorStub = sinon.stub(projectAwesome, 'validateQuizDescriptor', function() { return [{"not":"empty"}]; });
+            });
+            after(function() {
+                validateQuizDescriptorStub.restore();
+            });
+            it('should respond with json body of errors array', function(done) {
+                request(app)
+                .post('/v1/validate_quiz_descriptor')
+                .send({ descriptor : "fake qd, value doesn't matter here" })
+                .expect(200)
+                .end(function(err, res) {
+                    if (err) return done(err);
+                    expect(res.body).to.eql([{"not":"empty"}]);
+                    done();
+                });
+            });
+        });
+    });
+
 
     describe('GET /generate_moodle_xml', function() {
         describe('bad requests', function() {
