@@ -47,6 +47,7 @@ module.exports = function(app) {
 	});
 
 	app.post('/v1/build_quiz', function(req, res) {
+		console.log(req.body);
 		if (!('descriptor' in req.body)) {
 			res.status(400).end();
 			return;
