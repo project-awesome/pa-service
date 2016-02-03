@@ -47,30 +47,23 @@ module.exports = function(app) {
 	});
 
 	app.post('/v1/build_quiz', function(req, res) {
-		console.log(req.body);
 		if (!('descriptor' in req.body)) {
 			res.status(400).end();
 			return;
 		}
-		console.log("here1");
-
 		if (!('seed' in req.body)) {
 			res.status(400).end();
 			return;
 		}
-		console.log("here2");
 		if (!projectAwesome.isSeedValid(req.body.seed)) {
 			res.status(400).end();
 			return;
 		}
-		console.log("here3");
 		if (projectAwesome.validateQuizDescriptor(req.body.descriptor).length > 0) {
 			res.status(400).end();
 			return;
 		}
-		console.log("here4");
 		res.json(projectAwesome.buildQuiz(req.body.descriptor, req.body.seed));
-		console.log("here5");
 	});
 }
 
