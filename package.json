@@ -12,7 +12,7 @@
     "chai": "^3.2.0",
     "express": "^4.13.3",
     "mocha": "^2.3.2",
-    "project-awesome": "^1.4.0"
+    "project-awesome": "git+https://git@github.com/project-awesome/project-awesome.git"
   },
   "engines": {
     "node": "0.12.2"
