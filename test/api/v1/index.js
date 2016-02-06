@@ -1,11 +1,8 @@
 // testing modules
-var request = require('supertest');
-var chai = require("chai");
-var sinon = require("sinon");
-var sinonChai = require("sinon-chai");
-chai.should();
-chai.use(sinonChai);
-var expect = chai.expect;
+var request = require('supertest'),
+    chai = require("chai"),
+    sinon = require("sinon"),
+    expect = chai.expect;
 
 // for mocking
 var projectAwesome = require('project-awesome');
@@ -24,6 +21,45 @@ describe('v1 API', function() {
 
     after(function() {
         server.close();
+    });
+
+    describe('GET /list', function() {
+        var listStub;
+        beforeEach(function() {
+            listStub = sinon.stub(projectAwesome, 'list');
+            listStub.withArgs('invalid-type').throws();
+            listStub.withArgs('valid-type').returns('list-response');
+        });
+        afterEach(function() {
+            listStub.restore();
+        });
+        describe('response body', function() {
+            var resBody;
+            beforeEach(function(done) {
+                request(app)
+                    .get('/v1/list?type=valid-type')
+                    .expect(200)
+                    .end(function(err, res) {
+                        if (err) return done(err);
+                        resBody = res.body;
+                        done();
+                    });
+            });
+            it('should be a json object', function() {
+                expect(resBody).to.be.an('object');
+            });
+            it('should contain a list property with the appropriate result', function() {
+                expect(resBody.list).to.equal('list-response');
+            });
+        });
+        describe('when projectAwesome.list throws an error', function() {
+            it('should respond with error code 400', function(done) {
+                request(app)
+                    .get('/v1/list?type=invalid-type')
+                    .expect(400)
+                    .end(done);
+            });
+        });
     });
 
     describe('GET /check', function() {
