@@ -8,6 +8,14 @@ module.exports = function(app) {
 		res.json({valid: true});
 	});
 
+	app.get('/v1/list', function(req, res) {
+		try {
+			res.json({list: projectAwesome.list(req.query.type)});
+		} catch(e) {
+			res.status(400).end();
+		}
+	});
+
 }
 
 // 	app.get('/v1/is_seed_valid', requireQuery('seed'), function(req, res) {
