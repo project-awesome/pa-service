@@ -81,4 +81,11 @@ heroku login
 heroku logs --app pa-service-prod
 ```
 
+Or, to see the log in a continuous stream, use:
+
+```
+heroku logs --app pa-service-prod --tail
+```
+
+
 You may need to request to be added as a "collaborator" on the pa-service-prod Heroku application.  Ask another developer that has access to add you.
