@@ -85,6 +85,47 @@ describe('v1 API', function() {
                     done();
                 });
         });
+        
+        describe('when projectAwesome.check throws an error', function() {
+            it('should respond with error code 400', function(done) {
+                request(app)
+                    .get('/v1/check?type=invalid-type')
+                    .expect(400)
+                    .end(done);
+            });
+        });
+        
+        describe('when projectAwesome.check recieves no type', function() {
+            it('should respond with error code 400', function(done) {
+                request(app)
+                    .get('/v1/check?type=')
+                    .expect(400)
+                    .end(done);
+            });
+        });
+        
+        
+        it('should validate correct questionTypes', function(done) {
+            request(app)
+                .get('/v1/check?type=questionType&value=mc-change-of-base')
+                .expect(200)
+                .end(function(err, res) {
+                    if (err) return done(err);
+                    expect(res.body).to.eql({"valid":true});
+                    done();
+                });
+        });
+
+        it('should validate incorrect questionTypes', function(done) {
+            request(app)
+                .get('/v1/check?type=questionType&value=incorrectQuestionType')
+                .expect(200)
+                .end(function(err, res) {
+                    if (err) return done(err);
+                    expect(res.body).to.eql({"valid":false});
+                    done();
+                });
+        });
 
     });
 
