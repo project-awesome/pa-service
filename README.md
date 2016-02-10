@@ -1,4 +1,5 @@
 # pa-service
+This repo, when green on CI, automatically deploys to https://pa-service-prod.herokuapp.com
 # Developer Workflow
 * Fork https://github.com/project-awesome/pa-service repo to your own personal github
 * Make your changes 
