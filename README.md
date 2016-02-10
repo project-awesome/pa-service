@@ -1,6 +1,11 @@
 # pa-service
 
-This repo, when green on CI, automatically deploys to https://pa-service-prod.herokuapp.com
+The "production" version of this repo is https://github.com/project-awesome/pa-service 
+* When the production version is green on Travis-CI, at: https://travis-ci.org/project-awesome/pa-service
+* Then the app automatically deploys to https://pa-service-prod.herokuapp.com
+
+If/when you fork this repo, you are encouraged to set up your own Travis-CI and Heroku hooks.
+
 # Developer Workflow
 * Fork https://github.com/project-awesome/pa-service repo to your own personal github
 * Make your changes 
