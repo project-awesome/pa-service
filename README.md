@@ -70,4 +70,15 @@ URL requires urlencoding it, which is hard to do by
 hand, and taking a big long multi-line thing and
 stripping out all the lines breaks.
 
+# Debugging the production application (or apps on Heroku in general)
 
+If you are using the production version at:
+
+To see the logs, you can do:
+
+```
+heroku login
+heroku logs --app pa-service-prod
+```
+
+You may need to request to be added as a "collaborator" on the pa-service-prod Heroku application.  Ask another developer that has access to add you.
