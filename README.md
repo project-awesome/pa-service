@@ -1,7 +1,23 @@
 # pa-service
 
-To run locally:
+This repo, when green on CI, automatically deploys to https://pa-service-prod.herokuapp.com
+# Developer Workflow
+* Fork https://github.com/project-awesome/pa-service repo to your own personal github
+* Make your changes 
+* Test locally via `npm test`
+* [Set up your own personal Travis CI](https://github.com/project-awesome/TEAM-DOCUMENTATION/blob/master/HOW-TO-TRAVIS-CI.md)
+* Make sure your own personal Travis CI is green
+* Do a pull request back to https://github.com/project-awesome/pa-service
+# Testing
+* CI: https://travis-ci.org/project-awesome/pa-service
+* Interactive Testing: 
+```
+npm install
+npm test
+```
+Before accepting a pull request to https://github.com/project-awesome/pa-service, CI should be green.
 
+To run locally:
 
 ```
 npm install
@@ -17,7 +33,7 @@ http://localhost:5000/v1/...
 
 Where ... is whatever url you are looking for.
 
-Some things to try:
+# Some things to try:
 
 These are GET requests, so you can test them by just putting 
 this URL directly in the browser:
@@ -48,3 +64,5 @@ parameter, because its great big and putting it in the
 URL requires urlencoding it, which is hard to do by
 hand, and taking a big long multi-line thing and
 stripping out all the lines breaks.
+
+
