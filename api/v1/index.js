@@ -5,7 +5,11 @@ var requireQuery = requestChecker.requireQuery;
 module.exports = function(app) {
 
 	app.get('/v1/check', function(req,res) {
-		res.json({valid: true});
+		try {
+			res.json({valid: projectAwesome.check(req.query.type, req.query.value)});
+		}catch(e) {
+			res.status(400).end();
+		}
 	});
 
 	app.get('/v1/list', function(req, res) {
@@ -15,6 +19,7 @@ module.exports = function(app) {
 			res.status(400).end();
 		}
 	});
+	
 
 }
 
