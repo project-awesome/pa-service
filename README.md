@@ -4,7 +4,10 @@ The "production" version of this repo is https://github.com/project-awesome/pa-s
 * When the production version is green on Travis-CI, at: https://travis-ci.org/project-awesome/pa-service
 * Then the app automatically deploys to https://pa-service-prod.herokuapp.com
  
-If/when you fork this repo, you are encouraged to set up your own Travis-CI and Heroku hooks.
+If/when you fork this repo, you are encouraged to set up your own Travis-CI and Heroku hooks. If you set up your own heroku application for your fork, take note of the environment variables section below.
+
+# Environment Varaiables
+Since we aren't making releases of project-awesome, we need to make sure that heroku doesn't cache the code from the project-awesome/project-awesome repository. To prevent caching, we set the environment variable `NODE_MODULES_CACHE` to `false`. This is only a temporary fix. In the future we should be making releases and updating the project-awesome version in package.json.
 
 # Developer Workflow
 * Fork https://github.com/project-awesome/pa-service repo to your own personal github
