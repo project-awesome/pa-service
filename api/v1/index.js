@@ -8,12 +8,7 @@ module.exports = function(app) {
 		try {
 			res.json({valid: projectAwesome.check(req.query.type, req.query.value)});
 		}catch(e) {
-
-			res.status(400).json({
-					valid: false,
-					error: e
-			});
-			// res.status(400).end();
+			res.status(400).end();
 		}
 	});
 
