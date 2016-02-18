@@ -12,6 +12,7 @@ Since we aren't making releases of project-awesome, we need to make sure that he
 # Developer Workflow
 * Fork https://github.com/project-awesome/pa-service repo to your own personal github
 * Make your changes 
+* run npm install
 * Test locally via `npm test`
 * [Set up your own personal Travis CI](https://github.com/project-awesome/TEAM-DOCUMENTATION/blob/master/HOW-TO-TRAVIS-CI.md)
 * Make sure your own personal Travis CI is green
@@ -51,10 +52,13 @@ this URL directly in the browser:
 * http://localhost:5000/v1/check?type=questionType&value=paq-fr-multiple-choice
 
 These are POST, so you may have to do something different
-(TBD: write how to test this...)
+* start a local server (heroku local)
+* navigate to localhost:3000 (or through C9: http://workspaceName.userName.c9users.io/)
+* To test generate, navigate to YourWebAddress/test1.html
+* To test validate, navigate to YourWebAddress/test2.html
 
-* http://localhost:5000/v1/generate?type=json&seed=ABCD1234
-* http://localhost:5000/v1/generate?type=moodleXML&seed=ABCD1234
+//* http://localhost:5000/v1/generate?type=json&seed=ABCD1234
+//* http://localhost:5000/v1/generate?type=moodleXML&seed=ABCD1234
 
 For generate, there is another parameter, the quiz descriptor.
 
