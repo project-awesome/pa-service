@@ -65,7 +65,7 @@ describe('v1 API', function() {
     describe('GET /check', function() {
 
         it('should validate correct seeds', function(done) {
-            request(app)
+        request(app)
                 .get('/v1/check?type=seed&value=abcd1234')
                 .expect(200)
                 .end(function(err, res) {
@@ -128,8 +128,126 @@ describe('v1 API', function() {
         });
 
     });
+    //     describe('POST /build_quiz', function() {
+//         describe('bad requests', function() {
+//             describe('missing parameters', function() {
+//                 var isSeedValidStub;
+//                 var validateQuizDescriptorStub;
+//                 before(function() {
+//                     isSeedValidStub = sinon.stub(projectAwesome, 'isSeedValid', function() { return true; });
+//                     validateQuizDescriptorStub = sinon.stub(projectAwesome, 'validateQuizDescriptor', function() { return []; });
+//                 });
+//                 after(function() {
+//                     isSeedValidStub.restore();
+//                     validateQuizDescriptorStub.restore();
+//                 });
+//                 describe('no descriptor parameter', function() {
+//                     it('should respond with 400', function(done) {
+//                         request(app)
+//                         .post('/v1/build_quiz')
+//                         .send({seed:'someseed'})
+//                         .expect(400)
+//                         .end(done);
+//                     });
+//                 });
+    describe('POST /validate', function() {
 
+        var qd1 = '{    "version" : "0.1",    "questions": [{ 	    "question": "fr-change-of-base", 	    "repeat": 5 	}] }';
+        it('should validate correct type', function(done) {
+            request(app)
+            
+                .post('/v1/validate')
+                
+                .send({type: 'qd', value: qd1})
+                .expect(200)
+                .end(function(err, res) {
+                    if (err) return done(err);
+                    expect(res.body).to.eql({result: []});
+                    done();
+                });
+        });
+        
+
+        it('should respond with error 400 when post is empty', function(done) {
+            request(app)
+                .post('/v1/validate')
+                .expect(400)
+                .end(done);
+        });
+        
+        it('should respond with error 400 with invalid type', function(done) {
+            request(app)
+                .post('/v1/validate')
+                .send({type: 'notQuizDescriptor', value: qd1})
+                .expect(400)
+                .end(done);
+        });
+        it('should validate valid type with invalid value', function(done) {
+            request(app)
+                .post('/v1/validate')
+                .send({type: 'qd', value: {puppies: true}})
+                .expect(200)
+                .end(function(err, res) {
+                    if (err) return done(err);
+                    expect(res.body).length;
+                    done();
+                });
+        });
+        
+    });
+    
+    describe('POST /generate', function() {
+
+        var qd1 = '{    "version" : "0.1",    "questions": [{ 	    "question": "fr-change-of-base", 	    "repeat": 5 	}] }';
+        it('should generate with valid args and type:json', function(done) {
+            request(app)
+                .post('/v1/generate')
+                .send({type: 'json', qd: qd1, seed: 'abcd1234'})
+                .expect(200)
+                .end(done);
+        });
+        it('should generate with valid args and type:moodleXML', function(done) {
+            request(app)
+                .post('/v1/generate')
+                .send({type: 'moodleXML', qd: {kittens: 'chuck'}, seed: 'abcd1234'})
+                .expect(400)
+                .end(done);
+        });
+        
+        it('should not generate with invalid type', function(done) {
+            request(app)
+                .post('/v1/generate')
+                .send({type: 'invalidTYpe', qd: qd1, seed: 'abcd1234'})
+                .expect(400)
+                .end(done);
+        });
+        it('should not generate with invalid qd', function(done) {
+            request(app)
+                .post('/v1/generate')
+                .send({type: 'moodleXML', qd: {kittens: 'chuck'}, seed: 'abcd1234'})
+                .expect(400)
+                .end(done);
+        });
+        it('should not generate with invalid seed', function(done) {
+            request(app)
+                .post('/v1/generate')
+                .send({type: 'json', qd: qd1, seed: 'NotAValidSeed'})
+                .expect(400)
+                .end(done);
+        });
+        
+        
+
+        it('should respond with error 400 when post is empty', function(done) {
+            request(app)
+                .post('/v1/generate')
+                .expect(400)
+                .end(done);
+        });
+        
+    });
 });
+
 
 // describe('v1 API', function() {
 
@@ -519,8 +637,3 @@ describe('v1 API', function() {
 //         });
 //     });
 // });
-
-
-
-
-
