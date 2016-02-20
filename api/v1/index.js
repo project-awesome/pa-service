@@ -5,7 +5,11 @@ var requireQuery = requestChecker.requireQuery;
 module.exports = function(app) {
 
 	app.get('/v1/check', function(req,res) {
-		res.json({valid: true});
+		try {
+			res.json({valid: projectAwesome.check(req.query.type, req.query.value)});
+		}catch(e) {
+			res.status(400).end();
+		}
 	});
 
 	app.get('/v1/list', function(req, res) {
@@ -15,6 +19,28 @@ module.exports = function(app) {
 			res.status(400).end();
 		}
 	});
+	
+	
+	
+	app.post('/v1/generate', function(req,res) {
+		try {
+			res.json({question: projectAwesome.generate(req.body.type, req.body.qd, req.body.seed)});
+		}catch(e) {
+			res.status(400).json({error: 'Something is wrong'}).end();
+		}
+	});
+	
+	app.post('/v1/validate', function(req,res) {
+		
+		try {
+			res.json({result: projectAwesome.validate(req.body.type, req.body.value)});
+		}catch(e) {
+			res.status(400).end();
+		}
+	});
+	
+	
+	
 
 }
 
