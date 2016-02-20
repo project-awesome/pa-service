@@ -8,7 +8,8 @@ module.exports = function(app) {
 		try {
 			res.json({valid: projectAwesome.check(req.query.type, req.query.value)});
 		}catch(e) {
-			res.status(400).end();
+			res.status(400).json({error: e}).end();
+			
 		}
 	});
 
@@ -16,7 +17,7 @@ module.exports = function(app) {
 		try {
 			res.json({list: projectAwesome.list(req.query.type)});
 		} catch(e) {
-			res.status(400).end();
+			res.status(400).json({error: e}).end();
 		}
 	});
 	
@@ -26,7 +27,7 @@ module.exports = function(app) {
 		try {
 			res.json({question: projectAwesome.generate(req.body.type, req.body.qd, req.body.seed)});
 		}catch(e) {
-			res.status(400).json({error: 'Something is wrong'}).end();
+			res.status(400).json({error: e}).end();
 		}
 	});
 	
@@ -35,7 +36,7 @@ module.exports = function(app) {
 		try {
 			res.json({result: projectAwesome.validate(req.body.type, req.body.value)});
 		}catch(e) {
-			res.status(400).end();
+			res.status(400).json({error : e}).end();
 		}
 	});
 	
