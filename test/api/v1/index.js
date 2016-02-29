@@ -27,7 +27,7 @@ describe('v1 API', function() {
         var listStub;
         beforeEach(function() {
             listStub = sinon.stub(projectAwesome, 'list');
-            listStub.withArgs('invalid-type').throws();
+            listStub.withArgs('invalid-type').throws("Illegal Argument");
             listStub.withArgs('valid-type').returns('list-response');
         });
         afterEach(function() {
@@ -53,11 +53,15 @@ describe('v1 API', function() {
             });
         });
         describe('when projectAwesome.list throws an error', function() {
-            it('should respond with error code 400', function(done) {
+            it('should respond with error code 400 and a message', function(done) {
                 request(app)
                     .get('/v1/list?type=invalid-type')
                     .expect(400)
-                    .end(done);
+                    .end(function(err, res) {
+                        if (err) return done(err);
+                        expect(res.body).to.eql({"error":{"name":"Illegal Argument"}});
+                        done();
+                    });
             });
         });
     });
@@ -91,12 +95,16 @@ describe('v1 API', function() {
                 request(app)
                     .get('/v1/check?type=invalid-type')
                     .expect(400)
-                    .end(done);
+                     .end(function(err, res) {
+                        if (err) return done(err);
+                        expect(res.body).eql({ error: 'Illegal Argument: invalid-type'});
+                        done();
+                    });
             });
         });
         
         describe('when projectAwesome.check recieves no type', function() {
-            it('should respond with error code 400', function(done) {
+            it('should respond with error code 400 and include a message', function(done) {
                 request(app)
                     .get('/v1/check?type=')
                     .expect(400)
@@ -175,12 +183,16 @@ describe('v1 API', function() {
                 .end(done);
         });
         
-        it('should respond with error 400 with invalid type', function(done) {
+        it('should respond with error 400 with invalid type, and error message', function(done) {
             request(app)
                 .post('/v1/validate')
                 .send({type: 'notQuizDescriptor', value: qd1})
                 .expect(400)
-                .end(done);
+                .end(function(err, res) {
+                        if (err) return done(err);
+                        expect(res.body).eql({ error: 'Illegal Argument: notQuizDescriptor'});
+                        done();
+                });
         });
         it('should validate valid type with invalid value', function(done) {
             request(app)
@@ -217,9 +229,13 @@ describe('v1 API', function() {
         it('should not generate with invalid type', function(done) {
             request(app)
                 .post('/v1/generate')
-                .send({type: 'invalidTYpe', qd: qd1, seed: 'abcd1234'})
+                .send({type: 'invalidType', qd: qd1, seed: 'abcd1234'})
                 .expect(400)
-                .end(done);
+                .end(function(err, res) {
+                        if (err) return done(err);
+                        expect(res.body).eql({ error: 'Illegal Argument: invalidType'});
+                        done();
+                });
         });
         it('should not generate with invalid qd', function(done) {
             request(app)
