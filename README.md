@@ -38,24 +38,31 @@ then check on localhost:5000
 
 try:
 
-http://localhost:5000/v1/...
+http://localhost:5000/index.html (or on C9: http://workspaceName.userName.c9users.io/index.html)
 
-Where ... is whatever url you are looking for.
+from index, click on the button related to the function you'd like to test (check, list, generate, validate)
+
+Sample quiz descriptors can be found here: https://github.com/project-awesome/project-awesome/tree/master/Examples
+List takes in the query questionType and lists out all supported question types
+Check takes in a seed (an hexidecimal string) and a question type (use list function to find supported question types)
+Generate creates a quiz in a supported type(json, moodleXML... to be continued) a quiz descriptor (see above link for examples) and a seed(hex string)
+Validate takes in the type "qd" and a quiz desciptor. If there are no errors it returns empty json
+
 
 # Some things to try:
 
-These are GET requests, so you can test them by just putting 
+Check and List are GET requests, so you can alternatively test them by just putting 
 this URL directly in the browser:
 
 * http://localhost:5000/v1/list?type=questionType
 * http://localhost:5000/v1/check?type=seed&value=ABCD1234
 * http://localhost:5000/v1/check?type=questionType&value=paq-fr-multiple-choice
 
-These are POST, so you may have to do something different
+Generate and Validate are POST, so please use the index page to test them
 * start a local server (heroku local)
 * navigate to localhost:3000 (or through C9: http://workspaceName.userName.c9users.io/)
-* To test generate, navigate to YourWebAddress/test1.html
-* To test validate, navigate to YourWebAddress/test2.html
+* To test generate, navigate to YourWebAddress/generate.html
+* To test validate, navigate to YourWebAddress/validate.html
 
 //* http://localhost:5000/v1/generate?type=json&seed=ABCD1234
 //* http://localhost:5000/v1/generate?type=moodleXML&seed=ABCD1234
