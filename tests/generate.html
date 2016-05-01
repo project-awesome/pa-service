@@ -1,25 +1,64 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>pa-service tests</title>
-</head>
-<body>
+	<head>
+		<meta charset="utf-8">
+		<title>pa-service tests</title>
+		<link href="generate.css" rel="stylesheet">
+        <link href="https://npmcdn.com/basscss@8.0.1/css/basscss.min.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+	</head>
 
-<h1>pa-service Generate Testing</h1>
+	<body class="p1" style="min-width:30rem;">
+		<header>
+			<h1>pa-service Generate Testing</h1>
+			<h3><a href="https://pa-service-prod.herokuapp.com">◀ PA-service Test Main</a></h3>
+		</header>
 
-<form method="POST" action="/v1/generate">
-    
-<p>Type</p><input type="text" id="type" name="type"></input>
+		<form method="POST" action="/v1/generate" id="quizDescriptor">
 
-<p>Seed</p><input type="text" id="seed" name="seed"></input>
+            <div class="clearfix" style="width:30rem;">
+                <div class="left m1 p1 bg-f3">
+                    <!-- these following formats should be pulled in programatically,
+                    based on the actual services PA offers (and not hardcoded)  -->
+                    <h3>Quiz Format</h3>
+                    <input type="radio" name="type" value="JSON"> JSON <br>
+                    <input type="radio" name="type" value="MoodleXML"> MoodleXML<br>
+                    <input type="radio" name="type" value="HTML"> HTML
+                </div>
 
-<p>Quiz Descriptor:</p><input type ="text" id="qd" name="qd"></input>
+                <div class="right m1 p1 bg-f3">
+                    <h3>Quiz Seed</h3>
+                    <input type="text" id="seed" name="seed" placeholder=" abcd1234"></input>
+                    <p>Valid seeds are 8 lowercase hex values; 0-9, a-d.</p>
+                </div>
+            </div>
 
-</textarea>
+            <div class="clearfix">
+                <div class="md-col md-col-6">
+                    <div class="m1 p2 bg-f3">
+    					<h3>Quiz Descriptor:</h3>
+    					<a href="https://github.com/project-awesome/project-awesome/tree/master/Examples">Link to example Quiz Descriptors</a>
+    					<input type="submit" value="Generate Quiz" id="generate-button" style="width: 100%;"></input>
+    					<textarea class="fullw mt1" style="width:99%;min-height:16rem;" form="quizDescriptor" name="quiz-descriptor" placeholder="ghost text quiz descriptors go here using JAVASCRIPT!"></textarea>
+    				</div>
+                </div>
 
-<input type="submit">Try it</input>
+                <div class="md-col md-col-6">
+                    <div class="m1 p2 bg-f3">
+                        <h3 style="hover:font-size:3em;">Generated Quiz:</h3>
+                        <p style="color:#777; font-style:italic; font-family:sans-serif; width: 100%;" >generated quizzes will appear here using AJAX!</p>
+                    </div>
+                </div>
 
-</form>
+            </div>
 
-</body>
+		</form>
+
+	</body>
+
+    <script type="text/javascript">
+        $.post()
+    </script>
+
+
 </html>
