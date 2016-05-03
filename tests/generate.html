@@ -14,16 +14,16 @@
 			<h3><a href="https://pa-service-prod.herokuapp.com">◀ PA-service Test Main</a></h3>
 		</header>
 
-		<form method="POST" action="/v1/generate" id="quizDescriptor">
+		<form method="POST" action="/v1/generate">
 
             <div class="clearfix" style="width:30rem;">
                 <div class="left m1 p1 bg-f3">
                     <!-- these following formats should be pulled in programatically,
                     based on the actual services PA offers (and not hardcoded)  -->
                     <h3>Quiz Format</h3>
-                    <input type="radio" name="type" value="JSON"> JSON <br>
-                    <input type="radio" name="type" value="MoodleXML"> MoodleXML<br>
-                    <input type="radio" name="type" value="HTML"> HTML
+					<input type="radio" name="type" value="json"> JSON <br>
+					<input type="radio" name="type" value="moodlexml"> MoodleXML<br>
+					<input type="radio" name="type" value="html"> HTML
                 </div>
 
                 <div class="right m1 p1 bg-f3">
@@ -39,14 +39,14 @@
     					<h3>Quiz Descriptor:</h3>
     					<a href="https://github.com/project-awesome/project-awesome/tree/master/Examples">Link to example Quiz Descriptors</a>
     					<input type="submit" value="Generate Quiz" id="generate-button" style="width: 100%;"></input>
-    					<textarea class="fullw mt1" style="width:99%;min-height:16rem;" form="quizDescriptor" name="quiz-descriptor" placeholder="ghost text quiz descriptors go here using JAVASCRIPT!"></textarea>
+						<textarea class="fullw mt1" style="width:99%;min-height:16rem;" name="qd" placeholder="coming soon – example quiz descriptors based on the selecte format will appear here in ghost text using AJAX!"></textarea>
     				</div>
                 </div>
 
                 <div class="md-col md-col-6">
                     <div class="m1 p2 bg-f3">
-                        <h3 style="hover:font-size:3em;">Generated Quiz:</h3>
-                        <p style="color:#777; font-style:italic; font-family:sans-serif; width: 100%;" >generated quizzes will appear here using AJAX!</p>
+                        <h3 style="hover:font-size:3em;">Coming soon — Generated Quiz:</h3>
+                        <p style="color:#777; font-style:italic; font-family:sans-serif; width: 100%;" >generated quizzes will appear here using AJAX, so that you don't have to reload the page!</p>
                     </div>
                 </div>
 
@@ -56,9 +56,12 @@
 
 	</body>
 
-    <script type="text/javascript">
+	<!-- TODO: add a script so that if the user presses return, it will automatically submit the form for them.  -->
+
+
+    <!-- <script type="text/javascript">
         $.post()
-    </script>
+    </script> -->
 
 
 </html>
