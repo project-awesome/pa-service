@@ -84,13 +84,23 @@
 	</body>
 
 	<script type="text/javascript">
-		document.getElementByID('generate-button').addEventListener('mouseover', function () {
-			document.getElementByID('#qd-form' ).submit();
+		document.querySelector('#generate-button').addEventListener('click', function () {
+			document.querySelector('#qd-form' ).submit();
 		})
 
 
-		document.getElementsByName('type')[0].checked
+		var radioButtons = document.getElementsByName('type')
+		var examples = {
+			'json' : '{"version": "0.1", "questions": [{ "question": "mc-change-of-base", "repeat": 5 }]}',
+			'moodlexml' : "no moodlexml examples provided",
+			'html' : "no moodlexml examples provided",
+		}
 
+		for (var i=0; i < radioButtons.length; i++) {
+			radioButtons[i].addEventListener('click', function(el) {
+				document.getElementsByName('qd')[0].placeholder = examples[this.value]
+			})
+		}
 
 	</script>
 
