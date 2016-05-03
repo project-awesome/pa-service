@@ -9,7 +9,7 @@ module.exports = function(app) {
 			res.json({valid: projectAwesome.check(req.query.type, req.query.value)});
 		}catch(e) {
 			res.status(400).json({error: e}).end();
-			
+
 		}
 	});
 
@@ -20,28 +20,28 @@ module.exports = function(app) {
 			res.status(400).json({error: e}).end();
 		}
 	});
-	
-	
-	
+
+
+
 	app.post('/v1/generate', function(req,res) {
 		try {
-			res.json({question: projectAwesome.generate(req.body.type, req.body.qd, req.body.seed)});
+			res.json({quiz: projectAwesome.generate(req.body.type, req.body.qd, req.body.seed)});
 		}catch(e) {
 			res.status(400).json({error: e}).end();
 		}
 	});
-	
+
 	app.post('/v1/validate', function(req,res) {
-		
+
 		try {
 			res.json({result: projectAwesome.validate(req.body.type, req.body.value)});
 		}catch(e) {
 			res.status(400).json({error : e}).end();
 		}
 	});
-	
-	
-	
+
+
+
 
 }
 
@@ -55,11 +55,11 @@ module.exports = function(app) {
 // 		res.json({ is_valid_question_type: is_valid_question_type }).end();
 // 	});
 
-// 	app.get('/v1/generate_moodle_xml', 
-// 		requireQuery('question_type'), 
-// 		requireQuery('count'), 
-// 		requireQuery('question_name'), 
-// 		requireQuery('seed'), 
+// 	app.get('/v1/generate_moodle_xml',
+// 		requireQuery('question_type'),
+// 		requireQuery('count'),
+// 		requireQuery('question_name'),
+// 		requireQuery('seed'),
 // 		function(req, res) {
 // 			if (!projectAwesome.isSeedValid(req.query.seed)) {
 // 				res.status(400).end();
@@ -106,14 +106,3 @@ module.exports = function(app) {
 // 		}
 // 		res.json(projectAwesome.buildQuiz(req.body.descriptor, req.body.seed));
 // 	});
-
-
-
-
-
-
-
-
-
-
-
