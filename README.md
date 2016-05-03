@@ -44,12 +44,29 @@ from index, click on the button related to the function you'd like to test (chec
 
 Sample quiz descriptors can be found here: https://github.com/project-awesome/project-awesome/tree/master/Examples
 
-#### Actions:
-- List takes in the query questionType and lists out all supported question types
-- Check takes in a seed (an hexidecimal string) and a question type (use list function to find supported question types)
-- Generate creates a quiz in a supported type(json, moodleXML... to be continued) a quiz descriptor (see above link for examples) and a seed(hex string)
-- Validate takes in the type "qd" and a quiz desciptor. If there are no errors it returns empty json
-
+#### API TEST Actions:
+- **LIST** all supported question types
+ - input: `questionType`
+ - returns: all supported question types.
+- **CHECK** whether a seed is valid for the given question type.
+  - inputs: 
+    - lowercase hexidecimal seed, such as `abcd1234`,
+    - a question type, such as `mc-change-of-base-5`
+  - returns:
+    - 
+- **VALIDATE** whether a quiz descriptor is valid. 
+  - inputs:
+    - type: `qd` 
+    - quiz desciptor [here are example quiz descriptors](https://github.com/project-awesome/project-awesome/tree/master/Examples)
+  - returns: 
+    - If there are no errors, empty json is returned
+- **GENERATE** a quiz in a supported output format.
+  - inputs:
+    - quiz format (`json`, `moodleXML`, etc) 
+    - a valid quiz descriptor
+    - seed (`abcd1234`)
+  - returns: 
+    - a quiz descriptor in the format selectet
 
 # Some things to try:
 
@@ -61,13 +78,13 @@ this URL directly in the browser:
 * http://localhost:5000/v1/check?type=questionType&value=paq-fr-multiple-choice
 
 Generate and Validate are POST, so please use the index page to test them
-* start a local server (heroku local)
-* navigate to localhost:3000 (or through C9: http://workspaceName.userName.c9users.io/)
+* start a local instance of pa-service with `heroku local:start`
+* navigate to `localhost:3000`
 * To test generate, navigate to YourWebAddress/generate.html
 * To test validate, navigate to YourWebAddress/validate.html
 
-//* http://localhost:5000/v1/generate?type=json&seed=ABCD1234
-//* http://localhost:5000/v1/generate?type=moodleXML&seed=ABCD1234
+//* http://localhost:5000/v1/generate?type=json&seed=abcd1234
+//* http://localhost:5000/v1/generate?type=moodleXML&seed=abcd1234
 
 For generate, there is another parameter, the quiz descriptor.
 
