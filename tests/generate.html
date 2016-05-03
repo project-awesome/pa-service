@@ -1,25 +1,108 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>pa-service tests</title>
-</head>
-<body>
+	<head>
+		<meta charset="utf-8">
+		<title>pa-service tests</title>
+		<style media="screen">
+			.bg-f3 {
+				background-color: #f3f3f3;
+			}
 
-<h1>pa-service Generate Testing</h1>
+			h3, p {
+				margin: 0 0 0.5em 0;
+			}
 
-<form method="POST" action="/v1/generate">
-    
-<p>Type</p><input type="text" id="type" name="type"></input>
+			#generate-button {
+				position: relative;
+				font-size: 1em;
+				background-color: #7cf;
+				border: none;
+				cursor: pointer;
+				border-radius: 0.3em;
+				box-shadow: 0 0.3em 0 #5af;
+				width: 100%;
+				height: 2.5em;
+				margin: .5em 0;
+			}
+			#generate-button:active {
+				top: 0.1em;
+				box-shadow: 0 0.2em 0 #5af;
+				border-bottom: none;
+			}
+		</style>
 
-<p>Seed</p><input type="text" id="seed" name="seed"></input>
+        <link href="https://npmcdn.com/basscss@8.0.1/css/basscss.min.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+	</head>
 
-<p>Quiz Descriptor:</p><input type ="text" id="qd" name="qd"></input>
+	<body class="p1" style="min-width:30rem;">
+		<header>
+			<h1>pa-service Generate Testing</h1>
+			<h3><a href="https://pa-service-prod.herokuapp.com">◀ PA-service Test Main</a></h3>
+		</header>
 
-</textarea>
+		<form method="POST" action="/v1/generate" id="qd-form">
 
-<input type="submit">Try it</input>
+            <div class="clearfix" style="width:30rem;">
+                <div class="left m1 p1 bg-f3" style="height:6rem;">
+                    <!-- these following formats should be pulled in programatically,
+                    based on the actual services PA offers (and not hardcoded)  -->
+                    <h3>Quiz Format</h3>
+					<input type="radio" name="type" value="json"> JSON <br>
+					<input type="radio" name="type" value="moodlexml"> MoodleXML<br>
+					<input type="radio" name="type" value="html"> HTML
+                </div>
 
-</form>
+                <div class="right m1 p1 bg-f3" style="height:6rem;">
+                    <h3>Quiz Seed</h3>
+                    <input type="text" id="seed" name="seed" placeholder=" abcd1234"></input>
+                    <p>Valid seeds are 8 lowercase hex values; 0-9, a-d.</p>
+                </div>
+            </div>
 
-</body>
+            <div class="clearfix">
+                <div class="md-col md-col-6">
+                    <div class="m1 p2 bg-f3">
+    					<h3>Quiz Descriptor:</h3>
+    					<a href="https://github.com/project-awesome/project-awesome/tree/master/Examples">Link to example Quiz Descriptors</a>
+    					<button id="generate-button">Generate Quiz</button>
+						<textarea class="fullw mt1" style="width:99%;min-height:16rem;" name="qd" placeholder="coming soon – example quiz descriptors based on the selecte format will appear here in ghost text using AJAX!"></textarea>
+    				</div>
+                </div>
+
+                <div class="md-col md-col-6">
+                    <div class="m1 p2 bg-f3">
+                        <h3 style="hover:font-size:3em;">Coming soon — Generated Quiz:</h3>
+                        <p style="color:#777; font-style:italic; font-family:sans-serif; width: 100%;" >generated quizzes will appear here using AJAX, so that you don't have to reload the page!</p>
+                    </div>
+                </div>
+
+            </div>
+
+		</form>
+
+	</body>
+
+	<script type="text/javascript">
+		document.querySelector('#generate-button').addEventListener('click', function () {
+			document.querySelector('#qd-form' ).submit();
+		})
+
+
+		var radioButtons = document.getElementsByName('type')
+		var examples = {
+			'json' : '{"version": "0.1", "questions": [{ "question": "mc-change-of-base", "repeat": 5 }]}',
+			'moodlexml' : "no moodlexml examples provided",
+			'html' : "no moodlexml examples provided",
+		}
+
+		for (var i=0; i < radioButtons.length; i++) {
+			radioButtons[i].addEventListener('click', function(el) {
+				document.getElementsByName('qd')[0].placeholder = examples[this.value]
+			})
+		}
+
+	</script>
+
+
 </html>
