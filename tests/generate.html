@@ -43,17 +43,17 @@
 
 		<form method="POST" action="/v1/generate" id="qd-form">
 
-            <div class="clearfix" style="width:30rem;">
+            <div class="clearfix">
                 <div class="left m1 p1 bg-f3" style="height:6rem;">
                     <!-- these following formats should be pulled in programatically,
                     based on the actual services PA offers (and not hardcoded)  -->
-                    <h3>Quiz Format</h3>
+                    <h3>Output Format</h3>
 					<input type="radio" name="type" value="json"> JSON <br>
-					<input type="radio" name="type" value="moodlexml"> MoodleXML<br>
+					<input type="radio" name="type" value="moodleXML"> MoodleXML<br>
 					<input type="radio" name="type" value="html"> HTML
                 </div>
 
-                <div class="right m1 p1 bg-f3" style="height:6rem;">
+                <div class="left m1 p1 bg-f3" style="height:6rem;">
                     <h3>Quiz Seed</h3>
                     <input type="text" id="seed" name="seed" placeholder=" abcd1234"></input>
                     <p>Valid seeds are 8 lowercase hex values; 0-9, a-d.</p>
@@ -66,7 +66,7 @@
     					<h3>Quiz Descriptor:</h3>
     					<a href="https://github.com/project-awesome/project-awesome/tree/master/Examples">Link to example Quiz Descriptors</a>
     					<button id="generate-button">Generate Quiz</button>
-						<textarea class="fullw mt1" style="width:99%;min-height:16rem;" name="qd" placeholder="coming soon – example quiz descriptors based on the selecte format will appear here in ghost text using AJAX!"></textarea>
+						<textarea class="fullw mt1" style="width:99%;min-height:16rem;" name="qd" placeholder='{"version": "0.1", "questions": [{ "question": "mc-change-of-base", "repeat": 5 }]}'></textarea>
     				</div>
                 </div>
 
@@ -87,20 +87,6 @@
 		document.querySelector('#generate-button').addEventListener('click', function () {
 			document.querySelector('#qd-form' ).submit();
 		})
-
-
-		var radioButtons = document.getElementsByName('type')
-		var examples = {
-			'json' : '{"version": "0.1", "questions": [{ "question": "mc-change-of-base", "repeat": 5 }]}',
-			'moodlexml' : "no moodlexml examples provided",
-			'html' : "no moodlexml examples provided",
-		}
-
-		for (var i=0; i < radioButtons.length; i++) {
-			radioButtons[i].addEventListener('click', function(el) {
-				document.getElementsByName('qd')[0].placeholder = examples[this.value]
-			})
-		}
 
 	</script>
 
