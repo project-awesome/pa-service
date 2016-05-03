@@ -3,7 +3,34 @@
 	<head>
 		<meta charset="utf-8">
 		<title>pa-service tests</title>
-		<link href="generate.css" rel="stylesheet">
+		<style media="screen">
+			.bg-f3 {
+				background-color: #f3f3f3;
+			}
+
+			h3, p {
+				margin: 0 0 0.5em 0;
+			}
+
+			#generate-button {
+				position: relative;
+				font-size: 1em;
+				background-color: #7cf;
+				border: none;
+				cursor: pointer;
+				border-radius: 0.3em;
+				box-shadow: 0 0.3em 0 #5af;
+				width: 100%;
+				height: 2.5em;
+				margin: .5em 0;
+			}
+			#generate-button:active {
+				top: 0.1em;
+				box-shadow: 0 0.2em 0 #5af;
+				border-bottom: none;
+			}
+		</style>
+
         <link href="https://npmcdn.com/basscss@8.0.1/css/basscss.min.css" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
 	</head>
@@ -17,7 +44,7 @@
 		<form method="POST" action="/v1/generate" id="qd-form">
 
             <div class="clearfix" style="width:30rem;">
-                <div class="left m1 p1 bg-f3">
+                <div class="left m1 p1 bg-f3" style="height:6rem;">
                     <!-- these following formats should be pulled in programatically,
                     based on the actual services PA offers (and not hardcoded)  -->
                     <h3>Quiz Format</h3>
@@ -26,7 +53,7 @@
 					<input type="radio" name="type" value="html"> HTML
                 </div>
 
-                <div class="right m1 p1 bg-f3">
+                <div class="right m1 p1 bg-f3" style="height:6rem;">
                     <h3>Quiz Seed</h3>
                     <input type="text" id="seed" name="seed" placeholder=" abcd1234"></input>
                     <p>Valid seeds are 8 lowercase hex values; 0-9, a-d.</p>
@@ -38,7 +65,7 @@
                     <div class="m1 p2 bg-f3">
     					<h3>Quiz Descriptor:</h3>
     					<a href="https://github.com/project-awesome/project-awesome/tree/master/Examples">Link to example Quiz Descriptors</a>
-    					<button id="generate-button" style="width: 100%;">Generate Quiz</button>
+    					<button id="generate-button">Generate Quiz</button>
 						<textarea class="fullw mt1" style="width:99%;min-height:16rem;" name="qd" placeholder="coming soon – example quiz descriptors based on the selecte format will appear here in ghost text using AJAX!"></textarea>
     				</div>
                 </div>
@@ -60,6 +87,11 @@
 		$( "#generate-button" ).click(function() {
 			$( "#target" ).submit();
 		});
+
+
+		$('input[name=radioName]:checked', '#myForm').val()
+
+
 	</script>
 
 
