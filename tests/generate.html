@@ -44,7 +44,7 @@
 		<form method="POST" action="/v1/generate" id="qd-form">
 
             <div class="clearfix" style="width:30rem;">
-                <div class="left m1 p1 bg-f3" style="height:6rem;">
+                <div class="left m1 p1 bg-f3" style="height:6rem;" id="quiz-format">
                     <!-- these following formats should be pulled in programatically,
                     based on the actual services PA offers (and not hardcoded)  -->
                     <h3>Quiz Format</h3>
@@ -84,12 +84,12 @@
 	</body>
 
 	<script type="text/javascript">
-		$( "#generate-button" ).click(function() {
-			$( "#target" ).submit();
-		});
+		document.getElementByID('generate-button').addEventListener('mouseover', function () {
+			document.getElementByID('#qd-form' ).submit();
+		})
 
 
-		$('input[name=radioName]:checked', '#myForm').val()
+		document.getElementsByName('type')[0].checked
 
 
 	</script>
