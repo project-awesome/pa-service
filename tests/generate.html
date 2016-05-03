@@ -14,7 +14,7 @@
 			<h3><a href="https://pa-service-prod.herokuapp.com">◀ PA-service Test Main</a></h3>
 		</header>
 
-		<form method="POST" action="/v1/generate">
+		<form method="POST" action="/v1/generate" id="qd-form">
 
             <div class="clearfix" style="width:30rem;">
                 <div class="left m1 p1 bg-f3">
@@ -38,7 +38,7 @@
                     <div class="m1 p2 bg-f3">
     					<h3>Quiz Descriptor:</h3>
     					<a href="https://github.com/project-awesome/project-awesome/tree/master/Examples">Link to example Quiz Descriptors</a>
-    					<input type="submit" value="Generate Quiz" id="generate-button" style="width: 100%;"></input>
+    					<button id="generate-button" style="width: 100%;">Generate Quiz</button>
 						<textarea class="fullw mt1" style="width:99%;min-height:16rem;" name="qd" placeholder="coming soon – example quiz descriptors based on the selecte format will appear here in ghost text using AJAX!"></textarea>
     				</div>
                 </div>
@@ -56,12 +56,11 @@
 
 	</body>
 
-	<!-- TODO: add a script so that if the user presses return, it will automatically submit the form for them.  -->
-
-
-    <!-- <script type="text/javascript">
-        $.post()
-    </script> -->
+	<script type="text/javascript">
+		$( "#generate-button" ).click(function() {
+			$( "#target" ).submit();
+		});
+	</script>
 
 
 </html>
