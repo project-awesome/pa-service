@@ -1,9 +1,9 @@
 # pa-service
-  
-The "production" version of this repo is https://github.com/project-awesome/pa-service 
+
+The "production" version of this repo is https://github.com/project-awesome/pa-service
 * When the production version is green on Travis-CI, at: https://travis-ci.org/project-awesome/pa-service
 * Then the app automatically deploys to https://pa-service-prod.herokuapp.com
- 
+
 If/when you fork this repo, you are encouraged to set up your own Travis-CI and Heroku hooks. If you set up your own heroku application for your fork, take note of the environment variables section below.
 
 # Environment Varaiables
@@ -19,7 +19,7 @@ Since we aren't making releases of project-awesome, we need to make sure that he
 * Do a pull request back to https://github.com/project-awesome/pa-service
 # Testing
 * CI: https://travis-ci.org/project-awesome/pa-service
-* Interactive Testing: 
+* Interactive Testing:
 ```
 npm install
 npm test
@@ -45,32 +45,42 @@ from index, click on the button related to the function you'd like to test (chec
 Sample quiz descriptors can be found here: https://github.com/project-awesome/project-awesome/tree/master/Examples
 
 #### API TEST Actions:
-- **LIST** all supported question types
- - input: `questionType`
- - returns: all supported question types.
-- **CHECK** whether a seed is valid for the given question type.
-  - inputs: 
-    - lowercase hexidecimal seed, such as `abcd1234`,
-    - a question type, such as `mc-change-of-base-5`
-  - returns:
-    - 
-- **VALIDATE** whether a quiz descriptor is valid. 
+- **LIST** all supported listableTypes
+ - input:
+ 	- a listableType, such as `questionType`, or `quizFormat`
+ - returns:
+ 	- a list of items of the given type, such as `["fr-change-of-base", "mc-change-of-base"]`
+
+
+- **CHECK** whether a checkableType is valid for the given value.
   - inputs:
-    - type: `qd` 
-    - quiz desciptor [here are example quiz descriptors](https://github.com/project-awesome/project-awesome/tree/master/Examples)
-  - returns: 
-    - If there are no errors, empty json is returned
+    - a checkableType, such as `seed`, or `questionType`.
+    - a value, such as `abcd1234`, or `mc-change-of-base-5`
+  - returns:
+    - if valid, returns true. otherwise, false.
+
+
+- **VALIDATE** a quiz descriptor.
+  - inputs:
+    - type: `qd`
+    - quiz descriptor ( [here are example quiz descriptors](https://github.com/project-awesome/project-awesome/tree/master/Examples) )
+  - returns:
+    - If valid, an empty array is returned
+	- if invalid, json will return that describes how the schema was violated.
+
 - **GENERATE** a quiz in a supported output format.
   - inputs:
-    - quiz format (`json`, `moodleXML`, etc) 
+    - quiz output format (`json`, `moodleXML`, `html`)
     - a valid quiz descriptor
-    - seed (`abcd1234`)
-  - returns: 
-    - a quiz descriptor in the format selectet
+    - quiz seed (`abcd1234`)
+  - returns:
+    - a quiz descriptor in the selected format
+
+
 
 # Some things to try:
 
-Check and List are GET requests, so you can alternatively test them by just putting 
+Check and List are GET requests, so you can alternatively test them by just putting
 this URL directly in the browser:
 
 * http://localhost:5000/v1/list?type=questionType
