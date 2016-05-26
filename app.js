@@ -1,8 +1,8 @@
 var express = require('express');
-	partials = require('express-partials')
+	partials = require('express-partials');
 	app = express();
 	bodyParser = require('body-parser');
-	projectAwesome = require('project-awesome')
+	projectAwesome = require('project-awesome');
 
 
 
@@ -19,6 +19,7 @@ app.get('/', function(req, res, next) {
 
 
 var lists = {};
+
 projectAwesome.list('listableType').forEach( function (item) {
 	lists[item] = projectAwesome.list(item);
 });
@@ -32,7 +33,21 @@ function capitalizeFirstLetter(string) {
 
 app.get(/\/([\S]+)\.html/, function(req, res, next) {
 	var page = capitalizeFirstLetter(req.params[0])
-	res.render(req.params[0], {lists, page });
+
+	pageDescriptionArray = {
+		"List":		"LIST all supported items from a given listableType.",
+		"Check":	"CHECK whether a given value is valid for its type.",
+		"Validate":	"VALIDATE a quiz descriptor",
+		"Generate":	"GENERATE a quiz in the supported output format."
+	}
+
+	data = {
+		lists: lists,
+		page: page,
+		pageDescription: pageDescriptionArray[page]
+	}
+
+	res.render(req.params[0], data );
 })
 
 
