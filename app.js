@@ -14,7 +14,7 @@ app.use(partials());
 
 app.get('/', function(req, res, next) {
 	var page = "";
-	res.render('index', {page});
+	res.render('index', page);
 });
 
 
