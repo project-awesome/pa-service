@@ -11,13 +11,10 @@ app.set('view engine', 'ejs');
 app.use("/css",express.static(__dirname + "/css"));
 app.use(partials());
 
-var displayInline="";
-
-var arda = "arda"
 
 app.get('/', function(req, res, next) {
 	var page = "";
-	res.render('index', {page, displayInline});
+	res.render('index', {page});
 });
 
 
@@ -35,7 +32,7 @@ function capitalizeFirstLetter(string) {
 
 app.get(/\/([\S]+)\.html/, function(req, res, next) {
 	var page = capitalizeFirstLetter(req.params[0])
-	res.render(req.params[0], {lists, page, displayInline});
+	res.render(req.params[0], {lists, page });
 })
 
 
