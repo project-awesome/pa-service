@@ -1,12 +1,46 @@
 var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
+	partials = require('express-partials')
+	app = express();
+	bodyParser = require('body-parser');
+	projectAwesome = require('project-awesome')
 
 
 
 app.set('port', (process.env.PORT || 5000));
+app.set('view engine', 'ejs');
+app.use("/css",express.static(__dirname + "/css"));
+app.use(partials());
 
-app.use(express.static('tests'));
+var displayInline="";
+
+var arda = "arda"
+
+app.get('/', function(req, res, next) {
+	var page = "";
+	res.render('index', {page, displayInline});
+});
+
+
+var lists = {};
+projectAwesome.list('listableType').forEach( function (item) {
+	lists[item] = projectAwesome.list(item);
+});
+
+// taken from stack overflow: http://stackoverflow.com/questions/1026069/capitalize-the-first-letter-of-string-in-javascript
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+
+
+app.get(/\/([\S]+)\.html/, function(req, res, next) {
+	var page = capitalizeFirstLetter(req.params[0])
+	res.render(req.params[0], {lists, page, displayInline});
+})
+
+
+
+
 
 app.use(bodyParser.urlencoded({'extended':'true'}));
 app.use(bodyParser.json());
@@ -28,4 +62,3 @@ require('./api')(app);
 
 // Exports application for testing
 module.exports = app;
-
