@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>pa-service <%= page %> API Testing</title>
+	<%- include ../partials/resources %>
+</head>
+
+<%- include ../partials/header %>
+
+
+<body>
+
+	<div class="flex flex-wrap">
+		<form method="GET" action="/v1/check" class="flex fg" style="max-width:30rem;">
+			<div class="panel fns fg">
+				<h3>Type</h3>
+				<% lists.checkableType.forEach(function(type) { %>
+					<p><input type="radio" name="type" value="<%= type %>"><%= type %></input></p>
+					<% }); %>
+			</div>
+
+			<div class="panel fg">
+				<h3>Value</h3>
+				<input type="text" id="value" name="value" style="height:1.5rem;"></input>
+				<input type="submit" value="Check It" class="blue-button" id="check-button"></input>
+			</div>
+		</form>
+
+		<div class="panel flex fg3" style="min-width:10rem;">
+			<h3>Results:</h3>
+			<div id="result" style="font-family:sans-serif;font-style:italic;color:#777;"></div>
+		</div>
+	</div>
+
+
+
+</body>
+
+<script type="text/javascript">
+var prevCall = {
+	type: "",
+	value: "",
+}
+
+var inline = true;
+
+document.getElementById('check-button').addEventListener('click', function (el) {
+	if (document.getElementById('inline').checked) el.preventDefault();
+
+	for (i = 0; i < document.getElementsByName("type").length; i++) {
+	    if (document.getElementsByName('type')[i].checked) {
+	    	el = document.getElementsByName('type')[i];
+		}
+	}
+
+	type = el.value;
+	value = document.getElementById('value').value;
+
+	// prevent duplicate API call case
+	if (prevCall.type == type
+		&& prevCall.value == value
+		&& inline == true) {
+		console.log("prevented duplicate API call");
+		return;
+	}
+
+	var data = {
+		type: type,
+		value: value,
+	}
+
+	console.log(data);
+	check(data);
+
+	prevCall = data;
+	inline = document.getElementById('inline').checked;
+})
+
+
+function check(data){
+	$.ajax({
+		type: "GET",
+		url: "/v1/check",
+		data: data,
+
+		success: function(res){
+			render(res);
+		}
+	})
+}
+
+function render(res) {
+	temp = JSON.stringify(res);
+	document.getElementById('result').innerHTML = temp;
+}
+</script>
+</html>

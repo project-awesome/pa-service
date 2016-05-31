@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<title>pa-service <%= page %> API Testing</title>
+		<%- include ../partials/resources %>
+		<style media="screen">
+			#generated {
+				color:#777;
+				font-style:italic;
+				font-family:sans-serif;
+				width: 100%;
+				font-size: .9em;
+				resize: none;
+				background-color: rgba(0,0,0,0);
+				border: none;
+				outline: none;
+			}
+		</style>
+	</head>
+
+	<%- include ../partials/header %>
+
+
+	<body class="flex flex-column">
+		<div id="container" class="flex flex-wrap">
+			<div class="flex fg">
+				<form class="flex-column fg" id="generate-form">
+					<div class="flex fg flex-wrap">
+						<div class="panel flex fg fns">
+							<h3>Output Format</h3>
+							<% lists.quizFormat.forEach(function(format) { %>
+								<p><input type="radio" name="type" value="<%= format %>" class="quizFormat"><%= format %></input></p>
+							<% }); %>
+						</div>
+
+						<div class="panel flex fg fns">
+							<h3>Quiz Seed</h3>
+							<input type="text" id="seed" name="seed" placeholder=" abcd1234"></input>
+							<p class="pt1">Valid seeds are 8 <br>lowercase hex values; 0-9, a-d.</p>
+						</div>
+					</div>
+
+					<div class="panel flex fg fns">
+						<h3>Quiz Descriptor:</h3>
+						<a href="https://github.com/project-awesome/project-awesome/tree/master/Examples">Link to example Quiz Descriptors</a>
+						<button id="generate-button" class="blue-button">Generate Quiz</button>
+						<textarea name="qd" placeholder='{"version": "0.1", "questions": [{ "question": "mc-change-of-base", "repeat": 5 }]}'></textarea>
+					</div>
+				</form>
+			</div>
+			<div class="flex fg fns">
+				<div class="panel flex fg flex-column">
+					<h3 class="flex fns">Generated Quiz:</h3>
+					<div id="results-div"></div>
+					<textarea class="flex fg" readonly id="generated" form="generate-form">generated quizzes will appear here using AJAX, so that you don't have to reload the page!</textarea>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+
+
+
+
+
+	</body>
+
+	<script type="text/javascript">
+
+		document.getElementById("generate-button").addEventListener('click', function(e) {
+			e.preventDefault();
+
+			var data = {
+				type: $("input[type='radio'][class='quizFormat']:checked").val(),
+				seed:  $("input[type='text'][name='seed']").val(),
+				qd: $("[name='qd']").val().replace(/\s/g,'')
+			}
+
+			console.log(data);
+			queryGenerate(data);
+		});
+
+		function queryGenerate(data){
+			$.ajax({
+				type: "POST",
+				url: "/v1/generate",
+				data: data,
+				success: function(res){
+					var type = data['type'];
+					var generated = document.getElementById('generated')
+					var outHTML = "";
+
+					generated.innerHTML = '';
+					document.getElementById('results-div').innerHTML = '';
+
+					if (type == 'json') {
+						outHTML = JSON.stringify(res, null, 4);
+					}
+					if (type == 'html') {
+						generated.innerHTML = '';
+						document.getElementById('results-div').innerHTML = res.quiz;
+						generated.style.height = 2 + "rem"
+						return;
+					}
+
+					if (type == 'moodleXML') {
+						outHTML = JSON.stringify(res);
+					}
+
+					generated.style.height = outHTML.split('\n').length + 2 + "rem"
+					generated.innerHTML = outHTML;
+				}
+			}); // end ajax call
+		}
+	</script>
+</html>

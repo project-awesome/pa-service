@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>pa-service <%= page %> API Testing</title>
+	<%- include ../partials/resources %>
+</head>
+<body>
+
+	<%- include ../partials/header %>
+
+	<div class="flex flex-wrap">
+		<form method="POST" action="/v1/validate" class="flex fg flex-column" id="form">
+			<div class="panel">
+				<h3>Type</h3>
+					<!-- the following element is hardcoded, but would be pulled in dynamically if PA-service has other types to test. -->
+					<p><input type="radio" name="type" value="qd" checked="true">Quiz Descriptor</input></p>
+			</div>
+			<div class="panel">
+				<h3>Value</h3>
+				<a href="https://github.com/project-awesome/project-awesome/tree/master/Examples">Link to example Quiz Descriptors</a>
+				<input type="button" class="blue-button fng" value="Validate" id="validate-button"></input>
+				<textarea name="value" id="text-area"></textarea>
+			</div>
+		</form>
+
+		<div class="panel flex fg">
+			<h3>Results:</h3>
+			<div id="generated" style="font-family:sans-serif;font-style:italic;color:#777;">submit a question type to validate</div>
+		</div>
+	</div>
+
+<script type="text/javascript">
+	document.getElementById('validate-button').addEventListener('click', function(e){
+		if (document.getElementById('seperate').checked) {
+			document.getElementById('form').submit();
+		} else {
+			var data = {
+				type: 'qd',
+				value:  document.getElementById('text-area').value
+			}
+
+			console.log(data);
+			validate(data);
+		}
+	});
+
+	function validate(data) {
+		$.ajax({
+			type: "POST",
+			url: "/v1/validate",
+			data: data,
+			success: function(res) {
+				console.log(res);
+
+				var generated = document.getElementById('generated')
+				var outHTML = JSON.stringify(res, null, 4);
+
+				generated.innerHTML = outHTML;
+			}
+		}); // end ajax call
+	}
+</script>
+
+
+</body>
+</html>

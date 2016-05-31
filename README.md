@@ -1,9 +1,9 @@
 # pa-service
-  
-The "production" version of this repo is https://github.com/project-awesome/pa-service 
+
+The "production" version of this repo is https://github.com/project-awesome/pa-service
 * When the production version is green on Travis-CI, at: https://travis-ci.org/project-awesome/pa-service
 * Then the app automatically deploys to https://pa-service-prod.herokuapp.com
- 
+
 If/when you fork this repo, you are encouraged to set up your own Travis-CI and Heroku hooks. If you set up your own heroku application for your fork, take note of the environment variables section below.
 
 # Environment Varaiables
@@ -19,7 +19,7 @@ Since we aren't making releases of project-awesome, we need to make sure that he
 * Do a pull request back to https://github.com/project-awesome/pa-service
 # Testing
 * CI: https://travis-ci.org/project-awesome/pa-service
-* Interactive Testing: 
+* Interactive Testing:
 ```
 npm install
 npm test
@@ -44,16 +44,43 @@ from index, click on the button related to the function you'd like to test (chec
 
 Sample quiz descriptors can be found here: https://github.com/project-awesome/project-awesome/tree/master/Examples
 
-#### Actions:
-- List takes in the query questionType and lists out all supported question types
-- Check takes in a seed (an hexidecimal string) and a question type (use list function to find supported question types)
-- Generate creates a quiz in a supported type(json, moodleXML... to be continued) a quiz descriptor (see above link for examples) and a seed(hex string)
-- Validate takes in the type "qd" and a quiz desciptor. If there are no errors it returns empty json
+#### API TEST Actions:
+- **LIST** all supported listableTypes
+ - input:
+ 	- a listableType, such as `questionType`, or `quizFormat`
+ - returns:
+ 	- a list of items of the given type, such as `["fr-change-of-base", "mc-change-of-base"]`
+
+
+- **CHECK** whether a checkableType is valid for the given value.
+  - inputs:
+    - a checkableType, such as `seed`, or `questionType`.
+    - a value, such as `abcd1234`, or `mc-change-of-base-5`
+  - returns:
+    - if valid, returns true. otherwise, false.
+
+
+- **VALIDATE** a quiz descriptor.
+  - inputs:
+    - type: `qd`
+    - quiz descriptor ( [here are example quiz descriptors](https://github.com/project-awesome/project-awesome/tree/master/Examples) )
+  - returns:
+    - If valid, an empty array is returned
+	- if invalid, json will return that describes how the schema was violated.
+
+- **GENERATE** a quiz in a supported output format.
+  - inputs:
+    - quiz output format (`json`, `moodleXML`, `html`)
+    - a valid quiz descriptor
+    - quiz seed (`abcd1234`)
+  - returns:
+    - a quiz descriptor in the selected format
+
 
 
 # Some things to try:
 
-Check and List are GET requests, so you can alternatively test them by just putting 
+Check and List are GET requests, so you can alternatively test them by just putting
 this URL directly in the browser:
 
 * http://localhost:5000/v1/list?type=questionType
@@ -61,13 +88,13 @@ this URL directly in the browser:
 * http://localhost:5000/v1/check?type=questionType&value=paq-fr-multiple-choice
 
 Generate and Validate are POST, so please use the index page to test them
-* start a local server (heroku local)
-* navigate to localhost:3000 (or through C9: http://workspaceName.userName.c9users.io/)
+* start a local instance of pa-service with `heroku local:start`
+* navigate to `localhost:3000`
 * To test generate, navigate to YourWebAddress/generate.html
 * To test validate, navigate to YourWebAddress/validate.html
 
-//* http://localhost:5000/v1/generate?type=json&seed=ABCD1234
-//* http://localhost:5000/v1/generate?type=moodleXML&seed=ABCD1234
+//* http://localhost:5000/v1/generate?type=json&seed=abcd1234
+//* http://localhost:5000/v1/generate?type=moodleXML&seed=abcd1234
 
 For generate, there is another parameter, the quiz descriptor.
 

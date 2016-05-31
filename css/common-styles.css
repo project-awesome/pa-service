@@ -1,0 +1,88 @@
+body {
+	margin: 0 auto;
+	padding: 0 0.25rem;
+}
+
+header {
+	margin: 0 -0.25rem 0.25rem -0.25rem;
+	padding: 0.5rem;
+	background-color: #f3f3f3;
+}
+
+.bg-f3 {
+	background-color: #f3f3f3;
+}
+
+h1, h3, h4, p {
+	margin: 0 0 0.5rem 0;
+}
+
+.panel {
+	margin: 0.3rem;
+	padding: 0.5rem 1rem 1rem 1rem;
+	background-color: #f3f3f3;
+	display: flex;
+	flex-direction: column;
+	baseline: 0rem;
+}
+
+
+.style-button {
+	height: 2rem;
+	margin: 0;
+	background-color: #aaa;
+	color: black;
+	border: 0;
+
+}
+
+.style-button:visited{
+	color: red;
+}
+
+.style-button:hover {
+	background-color: #bbb;
+}
+
+.style-button:active {
+	color: white;
+	background-color: #009fff;
+}
+
+
+.blue-button {
+	position: relative;
+	font-size: 1em;
+	background-color: #7cf;
+	border: none;
+	cursor: pointer;
+	border-radius: 0.3em;
+	box-shadow: 0 0.3em 0 #5af;
+	width: 100%;
+	display: block;
+	height: 2.5em;
+	margin: .5em 0;
+	outline: none;
+}
+.blue-button:active {
+	top: 0.1em;
+	box-shadow: 0 0.2em 0 #5af;
+	border-bottom: none;
+}
+
+textarea {
+	min-width: 20rem;
+	min-height: 16rem;
+}
+
+.fg {
+	flex-grow: 1;
+}
+
+.fg3 {
+	flex-grow: 3;
+}
+
+.fns {
+	flex-shrink: 0;
+}

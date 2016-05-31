@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+	<title>pa-service <%= page %> API Testing</title>
+	<%- include ../partials/resources %>
+</head>
+
+
+
+
+
+<body>
+	<%- include ../partials/header %>
+
+	<div class="flex flex-wrap flex-column">
+		<form method="GET" action="/v1/list/" class="panel">
+			<h3>Select a listableType to see its contents: </h3>
+
+			<% lists.listableType.forEach(function(type) { %>
+				<p><input type="radio" name="type" value="<%= type %>" class="listableTypesButtons"><%= type %></input></p>
+			<% }); %>
+		</form>
+
+		<div class="panel fns">
+			<h3>Results:</h3>
+			<div id="result" style="font-family:sans-serif;font-style:italic;color:#777;">nothing selected</div>
+		</div>
+	</div>
+
+
+</body>
+
+<script type="text/javascript">
+
+var selected = ""
+
+document.getElementById('seperate').addEventListener('click', function(e) {
+	if ($("input[type='radio'][class='listableTypesButtons']:checked")) {
+		document.forms[0].submit();
+		return;
+	}
+});
+
+
+$("input[type='radio'][class='listableTypesButtons']").each( function(i, el) {
+
+	el.addEventListener('click', function (e) {
+		if (document.getElementById('seperate').checked) {
+			document.forms[0].submit();
+			return;
+		}
+
+		var selectedValStr = $("input[type='radio'][class='listableTypesButtons']:checked")[0].value
+		if (selected == selectedValStr) {
+			console.log("prevented duplicate API call");
+			return;
+		}
+
+		selected = selectedValStr;
+
+		var data = {
+			type:  selectedValStr,
+		}
+
+		$('#result').empty();
+		queryGenerate(data, selectedValStr);
+	}); // addEventListener
+}); // each iteration over the radio buttons
+
+function wrapInsideP(inStr) {
+	res = "<p>" + inStr + "</p>";
+	return res;
+}
+
+
+function queryGenerate(data, selectedValStr){
+	$.ajax({
+		type: "GET",
+		url: "/v1/list",
+		data: data,
+		success: function(res){
+			console.log("RESULT:");
+			console.log(res);
+			result = $('#result');
+
+			var outHTML = wrapInsideP(selectedValStr + "(s):") + "<div class='ml2'>"
+
+
+			res['list'].forEach(function(item) {
+				outHTML = outHTML + wrapInsideP(item);
+			});
+
+			outHTML = outHTML + "</div>"
+			console.log(outHTML);
+
+			result[0].innerHTML = outHTML;
+
+		}
+	})
+}
+
+</script>
+
+</html>

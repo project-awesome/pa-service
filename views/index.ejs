@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>pa-service API Testing</title>
+	<%- include ../partials/resources %>
+
+	<style media="screen">
+		input {
+			font-size: 1rem;
+			margin: 0 0 0.5rem 0;
+		}
+	</style>
+</head>
+
+<header class="flex flex-wrap flex-column">
+	<h1>pa-service API Testing</h1>
+	<p>Below are the pa-service API; select one to test.</p>
+</header>
+
+
+<body>
+	<div class="p1">
+		<FORM METHOD="GET" ACTION="/list.html">
+			<INPUT TYPE="submit" VALUE="List">
+		</FORM>
+
+		<FORM METHOD="GET" ACTION="/check.html">
+			<INPUT TYPE="submit" VALUE="Check">
+		</FORM>
+
+		<FORM METHOD="GE" ACTION="/validate.html">
+			<INPUT TYPE="submit" VALUE="Validate">
+		</FORM>
+
+		<FORM METHOD="GET" ACTION="/generate.html">
+			<INPUT TYPE="submit" VALUE="Generate">
+		</FORM>
+
+		<p>For more info see: <a href="https://github.com/project-awesome/pa-service">Project Awesome github repository</a></p>
+	</div>
+</body>
+
+</html>
