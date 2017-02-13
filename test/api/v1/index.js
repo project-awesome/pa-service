@@ -113,9 +113,9 @@ describe('v1 API', function() {
         });
         
         
-        it('should validate correct questionTypes', function(done) {
+        it('should validate correct problemTypes', function(done) {
             request(app)
-                .get('/v1/check?type=questionType&value=mc-change-of-base')
+                .get('/v1/check?type=problemType&value=mc-change-of-base')
                 .expect(200)
                 .end(function(err, res) {
                     if (err) return done(err);
@@ -124,9 +124,9 @@ describe('v1 API', function() {
                 });
         });
 
-        it('should validate incorrect questionTypes', function(done) {
+        it('should validate incorrect problemTypes', function(done) {
             request(app)
-                .get('/v1/check?type=questionType&value=incorrectQuestionType')
+                .get('/v1/check?type=problemType&value=incorrectProblemType')
                 .expect(200)
                 .end(function(err, res) {
                     if (err) return done(err);
